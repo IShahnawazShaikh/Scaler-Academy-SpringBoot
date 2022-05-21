@@ -14,9 +14,12 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+//mine
