@@ -1,13 +1,14 @@
 package com.scaler.simpleserver.serviceimpl;
 
 import com.scaler.simpleserver.dto.TaskResponseDto;
+import com.scaler.simpleserver.exceptionhandling.TaskNotFoundException;
 import com.scaler.simpleserver.models.Task;
 import com.scaler.simpleserver.service.TaskService;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TaskServiceImplementation implements TaskService {
 
@@ -24,13 +25,20 @@ public class TaskServiceImplementation implements TaskService {
     public List<TaskResponseDto> getAllTask() {
         List<TaskResponseDto> toReturnList=new ArrayList<>();
         taskList.stream().forEach(task->{
-           TaskResponseDto responseDto=new TaskResponseDto();
-           responseDto.setId(task.getId());
-           responseDto.setTaskName(task.getTaskName());
-           responseDto.setCompleted(task.getCompleted());
-           responseDto.setDueBy(task.getDueBy());
-         toReturnList.add(responseDto);
+         toReturnList.add(new TaskResponseDto(task.getId(),task.getTaskName(),task.getIsCompleted(),task.getDueBy()));
       });
        return toReturnList;
+    }
+
+    @Override
+    public Task findTaskById(Integer id)  {
+        AtomicReference<Task> task = new AtomicReference<>();
+        taskList.forEach(t -> {
+            if (t.getId() == id) { task.set(t); }
+        });
+        if (task.get() == null) {
+            throw new TaskNotFoundException(id);
+        }
+        return task.get();
     }
 }
