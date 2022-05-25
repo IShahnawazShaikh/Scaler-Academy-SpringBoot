@@ -10,6 +10,5 @@ import java.util.List;
 @Service
 public interface TaskService {
     List<TaskResponseDto> getAllTask();
-
     Task findTaskById(Integer id);
 }
