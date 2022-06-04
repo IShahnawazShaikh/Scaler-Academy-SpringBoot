@@ -2,13 +2,12 @@ package beans;
 
 import lombok.Data;
 
-@Data
 public class Student {
-    private String firstName;
-    private int rollNumber;
 
-    public Student(String firstName,int rollNumber) {
+     private String firstName;
+     private int id;
+    public Student(String firstName, int id) {
         this.firstName=firstName;
-        this.rollNumber=rollNumber;
+        this.id=id;
     }
 }

@@ -7,6 +7,7 @@ public class Application {
     public static void main(String...x){
         ApplicationContext context=new ClassPathXmlApplicationContext("spring-config.xml");
         var student=(Student)context.getBean("student");
-        System.out.println(student.getFirstName()+" "+student.getRollNumber());
+        System.out.println(student);
+
     }
 }

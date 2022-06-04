@@ -1,1 +1,4 @@
 .idea
+spring-core/target/
+app.mv.db
+app_test.mv.db
