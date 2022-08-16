@@ -31,3 +31,47 @@
 - Add a image upload service so that \<img\> can be embedded in blog articles
 - Add support for pagination when listing articles and users
 
+
+### Technical Specification
+
+#### Entities
+
+##### User
+```json
+  {
+  "id": 12,
+  "username":"IShahnawazShaikh",
+  "email":"shahnawaz@gmail.com",
+  "avatar": "https://avatars.dicebear.com/v2/johndoe001.png",
+  "createdAt": "2020-01-01T00:00:00.000Z"
+ }
+```
+##### Article
+
+```json
+{
+  "id": 124,
+  "heading": "My first blog post",
+  "slug": "my-first-blog-post",
+  "subheading": "This is my first blog post",
+  "tags": ["blog", "first"],
+  "content": "<p>This is my first blog post</p>",
+  "authorId": 12,
+  "createdAt": "2020-01-01T00:00:00.000Z"
+}
+```
+
+##### Comment
+
+```json
+{
+  "id": 17,
+  "title": "My first comment",
+  "body": "This is my first comment",
+  "articleId": 124,
+  "authorId": 42,
+  "createdAt": "2020-01-01T00:00:00.000Z"
+}
+
+```
+
