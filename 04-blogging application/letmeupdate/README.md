@@ -75,3 +75,32 @@
 
 ```
 
+
+### Join Tables
+
+#### Follows
+```json
+{
+  "id": 133,
+  "followerId": 12,
+  "followeeId": 42,
+  "createdAt": "2020-01-01T00:00:00.000Z"
+}
+```
+
+##### Likes
+
+```json
+{
+  "id": 524,
+  "likerId": 12,
+  "articleId": 124,
+  "createdAt": "2020-01-01T00:00:00.000Z"
+}
+```
+
+### Schema Diagram
+
+![image](https://user-images.githubusercontent.com/1327050/168328390-12badd31-49f9-4a00-a3be-b94f7298e4fc.png)
+
+
