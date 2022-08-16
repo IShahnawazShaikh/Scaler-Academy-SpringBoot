@@ -103,4 +103,67 @@
 
 ![image](https://user-images.githubusercontent.com/1327050/168328390-12badd31-49f9-4a00-a3be-b94f7298e4fc.png)
 
+### API Endpoints
+
+
+#### users
+
+##### `POST /users`
+create a new user (signup)
+
+##### `POST /users/login`
+login to an existing user
+
+##### `GET /users` 📄
+list all users
+
+available query parameters :
+- `?sort=date` or `?sort=followers`
+- `?username=something` filter by username (i.e. username contains `something`)
+- `?follower=johndoe`🔐 users whom `johndoe` follows
+- `?following=johndoe`🔐 find all `johndoe` followers
+
+
+##### `GET /users/{userid}` 🔐
+get user profile by user id
+
+##### `GET /users/@{username}` 🔐
+get user profile by username
+
+##### `PUT /users/@{username}/follow` 🔐
+follow a user
+
+##### `DELETE /users/@{username}/follow` 🔐👤
+unfollow a user
+
+
+#### articles
+
+##### `POST /articles` 🔐
+create a new article
+
+##### `GET /articles/{article-slug}`
+get article by slug
+
+##### `PATCH /articles/{article-slug}` 🔐👤
+update article by slug
+
+##### `DELETE /articles/{article-slug}` 🔐👤
+delete article by slug
+
+##### `PUT /articles/{article-slug}/like` 🔐
+like article by slug
+
+##### `DELETE /articles/{article-slug}/like` 🔐👤
+unlike article by slug
+
+##### `GET /articles` 📄
+get all articles
+
+available query parameters:
+- `?following=true` 🔐 (default: false) get articles of users that you are following
+- `?sort=date` (default) or `?sort=likes` : sort by date or likes
+- `?tags=startups,tech` : filter articles by tags
+- `?author=username` : filter articles by author
+- `?title=something` : search articles by title (i.e. title includes `something`)
 
