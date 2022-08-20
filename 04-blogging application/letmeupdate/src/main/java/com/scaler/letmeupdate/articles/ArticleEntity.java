@@ -10,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 @Entity
 @Table(name="articles")
 public class ArticleEntity extends BaseEntity {

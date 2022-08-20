@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor@RequiredArgsConstructor
+@Builder
 @Entity
 @Table(name="comments")
 public class CommentEntity extends BaseEntity {
