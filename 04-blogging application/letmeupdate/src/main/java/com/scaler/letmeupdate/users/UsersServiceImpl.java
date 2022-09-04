@@ -1,5 +1,6 @@
 package com.scaler.letmeupdate.users;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,26 +8,20 @@ import org.springframework.stereotype.Service;
 public class UsersServiceImpl implements UsersService{
 
     private UsersRepository usersRepository;
+    private ModelMapper modelMapper;
 
-    UsersServiceImpl(@Autowired UsersRepository usersRepository){
+    UsersServiceImpl(@Autowired UsersRepository usersRepository, ModelMapper modelMapper){
         this.usersRepository=usersRepository;
+        this.modelMapper=modelMapper;
     }
 
     @Override
     public UsersDTO.UserResponse signup(UsersDTO.CreateUserRequest userRequest){
-        UserEntity userEntity=new UserEntity();
-        userEntity.setUsername(userRequest.getUsername());
-        userEntity.setFirstName(userRequest.getFirstName());
-        userEntity.setLastName(userRequest.getLastName());
-        userEntity.setBio(userRequest.getBio());
-        userEntity.setEmail(userRequest.getEmail());
-        userEntity.setPassword(userRequest.getPassword());
 
+        UserEntity userEntity=modelMapper.map(userRequest,UserEntity.class);
         var savedEntity=usersRepository.save(userEntity);
+        UsersDTO.UserResponse userResponse=modelMapper.map(savedEntity,UsersDTO.UserResponse.class);
 
-        UsersDTO.UserResponse userResponse=new UsersDTO.UserResponse();
-        userResponse.setId(savedEntity.getId());
-        userResponse.setUsername(savedEntity.getUsername());
         return userResponse;
     }
 
@@ -38,9 +33,7 @@ public class UsersServiceImpl implements UsersService{
         );
         // TODO: Mathc Password By Hashing
         if(responseEntity.getPassword().equals(loginRequest.getPassword())){
-            UsersDTO.UserResponse userResponse=new UsersDTO.UserResponse();
-            userResponse.setId(responseEntity.getId());
-            userResponse.setFirstName(responseEntity.getFirstName());
+            UsersDTO.UserResponse userResponse=modelMapper.map(responseEntity,UsersDTO.UserResponse.class);
             return userResponse;
         }
         else{
