@@ -23,7 +23,7 @@ public class UsersRepositoryTests {
                         .build()
 
         );
-       var user=usersRepository.findUserByUsername("ishahnawazshaikh")
+       var user=usersRepository.findByUsername("ishahnawazshaikh")
                        .orElseThrow(()->new RuntimeException("User Not Found"));
 
        assertEquals(user.getUsername(),"ishahnawazshaikh");
