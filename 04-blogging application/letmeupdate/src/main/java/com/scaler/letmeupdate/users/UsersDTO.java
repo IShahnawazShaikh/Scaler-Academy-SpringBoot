@@ -16,19 +16,18 @@ public class UsersDTO {
     }
 
     @Data
-    public static class LoginRequest{
+    public static class LoginUserRequest {
         private String username;
         private String password;
     }
     @Data
-    public static class UserResponse{
+    public static class LoginUserResponse {
         private Integer id;
         private String username;
         private String firstName;
         private String lastName;
         private String email;
         private String bio;
-        // TODO: Token will generate
         private String token;
     }
 

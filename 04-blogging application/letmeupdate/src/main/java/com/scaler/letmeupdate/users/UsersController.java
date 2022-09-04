@@ -1,7 +1,6 @@
 package com.scaler.letmeupdate.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +18,7 @@ public class UsersController {
         this.usersServiceImpl=usersServiceImpl;
     }
     @PostMapping("/signup")
-    ResponseEntity<UsersDTO.UserResponse> signup(@RequestBody UsersDTO.CreateUserRequest userRequest){
+    ResponseEntity<UsersDTO.LoginUserResponse> signup(@RequestBody UsersDTO.CreateUserRequest userRequest){
         var response=usersServiceImpl.signup(userRequest);
         return ResponseEntity.created(
                 URI.create("/users/"+response.getId())
@@ -27,7 +26,7 @@ public class UsersController {
     }
 
    @PostMapping("/login")
-   ResponseEntity <UsersDTO.UserResponse> login(@RequestBody UsersDTO.LoginRequest loginRequest){
+   ResponseEntity <UsersDTO.LoginUserResponse> login(@RequestBody UsersDTO.LoginUserRequest loginRequest){
        var response=usersServiceImpl.login(loginRequest);
        return ResponseEntity.ok(response);
    }

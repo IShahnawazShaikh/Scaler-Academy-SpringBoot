@@ -1,6 +1,6 @@
 package com.scaler.letmeupdate.users;
 
 public interface UsersService {
-  public UsersDTO.UserResponse signup(UsersDTO.CreateUserRequest userRequest);
-  public UsersDTO.UserResponse login(UsersDTO.LoginRequest loginRequest);
+  public UsersDTO.LoginUserResponse signup(UsersDTO.CreateUserRequest userRequest);
+  public UsersDTO.LoginUserResponse login(UsersDTO.LoginUserRequest loginRequest);
 }
