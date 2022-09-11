@@ -10,11 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class JWTAuthFilter extends AuthenticationFilter {
 
-    /**
-     *  Step : 02
-     * @param authManager
-     * @param authConverter
-     */
     public JWTAuthFilter(JWTAuthManager authManager, JWTAuthConverter authConverter) {
         super(authManager, authConverter);
 

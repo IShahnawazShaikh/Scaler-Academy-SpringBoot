@@ -15,12 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-    /**
-     *   Step: 01
-     * @param http
-     * @throws Exception
-     */
-
     @Autowired
     private JWTAuthManager jwtAuthManager;
 
