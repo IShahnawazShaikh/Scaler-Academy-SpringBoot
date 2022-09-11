@@ -2,6 +2,7 @@ package com.scaler.letmeupdate.users;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,17 +15,20 @@ public class UsersServiceImpl implements UsersService{
 
     private UserJwtService jwtService;
 
-    public UsersServiceImpl(UsersRepository usersRepository, ModelMapper modelMapper, UserJwtService jwtService) {
+    private PasswordEncoder passwordEncoder;
+
+    public UsersServiceImpl(UsersRepository usersRepository, ModelMapper modelMapper, UserJwtService jwtService, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.modelMapper = modelMapper;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
-
     @Override
     public UsersDTO.LoginUserResponse signup(UsersDTO.CreateUserRequest userRequest){
         // TODO: Check valid and unique username/email
         UserEntity userEntity=modelMapper.map(userRequest,UserEntity.class);
         userEntity.setCreatedAt(new Date());
+        userEntity.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         var savedEntity=usersRepository.save(userEntity);
         UsersDTO.LoginUserResponse loginUserResponse=modelMapper.map(savedEntity, UsersDTO.LoginUserResponse.class);
         loginUserResponse.setToken(jwtService.createJwtTokenFromUsername(userRequest.getUsername()));
@@ -38,8 +42,7 @@ public class UsersServiceImpl implements UsersService{
                 ()->new UserNotFoundException(loginRequest.getUsername())
         );
 
-        // TODO:  Match Password By Hashing
-        if(responseEntity.getPassword().equals(loginRequest.getPassword())){
+        if(passwordEncoder.matches(loginRequest.getPassword(),responseEntity.getPassword())){
             UsersDTO.LoginUserResponse loginUserResponse=modelMapper.map(responseEntity, UsersDTO.LoginUserResponse.class);
             loginUserResponse.setToken(jwtService.createJwtTokenFromUsername(loginRequest.getUsername()));
             return loginUserResponse;

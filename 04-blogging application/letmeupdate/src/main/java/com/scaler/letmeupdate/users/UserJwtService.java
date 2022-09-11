@@ -23,7 +23,7 @@ public class UserJwtService {
         return  JWT.create()
                 .withClaim(CLAIM_USER,username)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(new Date().getTime()+expirationDate))// TODO: Add expiration
+                .withExpiresAt(new Date(new Date().getTime()+expirationDate))
                 .sign(algorithm);
     }
     public String getUsernameFromJwtToken(String jwtToken){
