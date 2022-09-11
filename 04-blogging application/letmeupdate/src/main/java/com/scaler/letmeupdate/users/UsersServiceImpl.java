@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UsersServiceImpl implements UsersService{
 
@@ -22,9 +24,10 @@ public class UsersServiceImpl implements UsersService{
     public UsersDTO.LoginUserResponse signup(UsersDTO.CreateUserRequest userRequest){
         // TODO: Check valid and unique username/email
         UserEntity userEntity=modelMapper.map(userRequest,UserEntity.class);
+        userEntity.setCreatedAt(new Date());
         var savedEntity=usersRepository.save(userEntity);
         UsersDTO.LoginUserResponse loginUserResponse=modelMapper.map(savedEntity, UsersDTO.LoginUserResponse.class);
-        loginUserResponse.setToken(jwtService.createJwtToken(userRequest.getUsername()));
+        loginUserResponse.setToken(jwtService.createJwtTokenFromUsername(userRequest.getUsername()));
         return loginUserResponse;
     }
 
@@ -34,10 +37,11 @@ public class UsersServiceImpl implements UsersService{
         var responseEntity = usersRepository.findByUsername(loginRequest.getUsername()).orElseThrow(
                 ()->new UserNotFoundException(loginRequest.getUsername())
         );
-        // TODO: Mathc Password By Hashing
+
+        // TODO:  Match Password By Hashing
         if(responseEntity.getPassword().equals(loginRequest.getPassword())){
             UsersDTO.LoginUserResponse loginUserResponse=modelMapper.map(responseEntity, UsersDTO.LoginUserResponse.class);
-            loginUserResponse.setToken(jwtService.createJwtToken(loginRequest.getUsername()));
+            loginUserResponse.setToken(jwtService.createJwtTokenFromUsername(loginRequest.getUsername()));
             return loginUserResponse;
         }
         else{
@@ -46,6 +50,22 @@ public class UsersServiceImpl implements UsersService{
 
     }
 
+    @Override
+    public UsersDTO.GetUserResponse findByUsername(String username) {
+       var userEntity= usersRepository.findByUsername(username).orElseThrow(
+            ()-> new UserNotFoundException(username)
+       );
+       UsersDTO.GetUserResponse userResponse=modelMapper.map(userEntity,UsersDTO.GetUserResponse.class);
+       return userResponse;
+    }
+
+
+    public UserEntity findUserEntityByUsername(String username) {
+        var userEntity= usersRepository.findByUsername(username).orElseThrow(
+                ()-> new UserNotFoundException(username)
+        );
+       return userEntity;
+    }
 
 
     // ********* Customized Exception ***********************

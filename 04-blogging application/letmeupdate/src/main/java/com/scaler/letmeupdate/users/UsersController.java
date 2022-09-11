@@ -2,10 +2,7 @@ package com.scaler.letmeupdate.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -31,5 +28,11 @@ public class UsersController {
        return ResponseEntity.ok(response);
    }
 
+   @GetMapping("/@{username}")
+    ResponseEntity<UsersDTO.GetUserResponse> getUserByUsername(@PathVariable("username") String username){
+       var user=usersServiceImpl.findByUsername(username);
+
+       return ResponseEntity.ok(user);
+   }
 
 }

@@ -13,13 +13,13 @@ public class UserJwtService {
     private static final String CLAIM_USER="username";
     Algorithm algorithm = Algorithm.HMAC256(SECRET);
 
-    String createJwtToken(String username){
+    public String createJwtTokenFromUsername(String username){
         return  JWT.create()
                 .withClaim(CLAIM_USER,username)
                 .withIssuedAt(new Date())   // TODO: Add expiration
                 .sign(algorithm);
     }
-    String getUserFromJwtToken(String jwtToken){
+    public String getUsernameFromJwtToken(String jwtToken){
         return JWT.require(algorithm)
                 .build()
                 .verify(jwtToken)
