@@ -50,7 +50,6 @@ public class UsersServiceImpl implements UsersService{
         else{
            throw new UserAuthenticationException();
         }
-
     }
 
     @Override
