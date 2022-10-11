@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService{
@@ -59,6 +61,18 @@ public class UsersServiceImpl implements UsersService{
        );
        UsersDTO.GetUserResponse userResponse=modelMapper.map(userEntity,UsersDTO.GetUserResponse.class);
        return userResponse;
+    }
+
+    @Override
+    public List<UsersDTO.GetUserResponse> getAllUsers() {
+        var allUsers=usersRepository.findAll();
+      var response =
+                allUsers
+                        .stream()
+                        .map(user -> modelMapper.map(user, UsersDTO.GetUserResponse.class))
+                        .collect(Collectors.toList());
+
+        return response;
     }
 
 

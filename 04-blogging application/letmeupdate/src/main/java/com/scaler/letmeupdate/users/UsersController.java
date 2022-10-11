@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -36,5 +37,12 @@ public class UsersController {
 
        return ResponseEntity.ok(user);
    }
+
+   @GetMapping("/all")
+    ResponseEntity<List<UsersDTO.GetUserResponse>> getAllUsers(){
+       var response=usersServiceImpl.getAllUsers();
+        return ResponseEntity.ok(response);
+   }
+
 
 }
