@@ -12,6 +12,6 @@ import java.util.Arrays;
 public class MovieInfoController {
     @RequestMapping("/{movieId}")
     public Movie getMovieDetails(@PathVariable("movieId") String movieId){
-         return new Movie("Don","don","Shahrukh Khan");
+         return new Movie("Don","12345","Shahrukh Khan");
     }
 }
