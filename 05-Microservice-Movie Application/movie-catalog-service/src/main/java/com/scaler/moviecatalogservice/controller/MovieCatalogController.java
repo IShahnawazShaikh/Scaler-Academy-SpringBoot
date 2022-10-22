@@ -38,15 +38,14 @@ public class MovieCatalogController {
                 new Rating("5678",5)
         );
         var response=ratingList.stream().map(rating->{
-          // var movie=restTemplate.getForObject("http://localhost:8082/movie/"+rating.getMovieId(),Movie.class);
+            var movie=restTemplate.getForObject("http://localhost:8082/movie/"+rating.getMovieId(),Movie.class);
+            /*
             var movie=webClientBuilder.build()
                     .get()
                     .uri("http://localhost:8082/movie/"+rating.getMovieId())
                     .retrieve()
                     .bodyToMono(Movie.class)
                     .block();
-            /***
-             *  bodyToMono() is a kind a promise.
              */
             return  new CatalogItem(movie.getMovieName(),movie.getDescription(),rating.getRating());
         }).collect(Collectors.toList());
