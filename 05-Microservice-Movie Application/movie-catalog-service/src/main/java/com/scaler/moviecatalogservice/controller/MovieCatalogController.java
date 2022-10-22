@@ -3,6 +3,7 @@ package com.scaler.moviecatalogservice.controller;
 import com.scaler.moviecatalogservice.models.CatalogItem;
 import com.scaler.moviecatalogservice.models.Movie;
 import com.scaler.moviecatalogservice.models.Rating;
+import com.scaler.moviecatalogservice.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,19 +26,11 @@ public class MovieCatalogController {
     private  WebClient.Builder webClientBuilder;
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
+        // 1) Get all rated Movie IDs
+        var userRating=restTemplate.getForObject("http://localhost:8083/rating/users/foo", UserRating.class);
 
-        /***
-         *  Steps
-         *  1) Get all rated Movie IDs
-         *  2) For all movie ID, call movie-info-service to get movie details
-         *  3) put them all together and send it back.
-         */
-
-        var ratingList=Arrays.asList(
-                new Rating("1234",4),
-                new Rating("5678",5)
-        );
-        var response=ratingList.stream().map(rating->{
+        var response=userRating.getUserRatingList().stream().map(rating->{
+            // 2) For all movie ID, call movie-info-service to get movie details
             var movie=restTemplate.getForObject("http://localhost:8082/movie/"+rating.getMovieId(),Movie.class);
             /*
             var movie=webClientBuilder.build()
@@ -47,6 +40,8 @@ public class MovieCatalogController {
                     .bodyToMono(Movie.class)
                     .block();
              */
+
+            // 3) put them all together and send it back.
             return  new CatalogItem(movie.getMovieName(),movie.getDescription(),rating.getRating());
         }).collect(Collectors.toList());
         return response;
