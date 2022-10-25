@@ -3,8 +3,7 @@ package com.scaler.moviecatalogservice.models;
 public class CatalogItem {
     private String movieName;
     private String movieDescription;
-
-
+    public CatalogItem(){}
     public CatalogItem(String movieName, String movieDescription, Integer rating) {
         this.movieName = movieName;
         this.movieDescription = movieDescription;
