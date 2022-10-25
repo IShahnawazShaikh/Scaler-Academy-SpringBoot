@@ -25,13 +25,13 @@ public class MovieCatalogController {
     @Autowired
     private  WebClient.Builder webClientBuilder;
     @RequestMapping("/{userId}")
-    public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
+    public List<CatalogItem> getCatalog(@PathVariable("userId") String  userId){
         // 1) Get all rated Movie IDs
-        var userRating=restTemplate.getForObject("http://localhost:8083/rating/users/foo", UserRating.class);
+        var userRating=restTemplate.getForObject("http://MOVIE-RATING-SERVICE/rating/users/foo", UserRating.class);
 
         var response=userRating.getUserRatingList().stream().map(rating->{
             // 2) For all movie ID, call movie-info-service to get movie details
-            var movie=restTemplate.getForObject("http://localhost:8082/movie/"+rating.getMovieId(),Movie.class);
+            var movie=restTemplate.getForObject("http://MOVIE-INFO-SERVICE/movie/"+rating.getMovieId(),Movie.class);
             /*
             var movie=webClientBuilder.build()
                     .get()
