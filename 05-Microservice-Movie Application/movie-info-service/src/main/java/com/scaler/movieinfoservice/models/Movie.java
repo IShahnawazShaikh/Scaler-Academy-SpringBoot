@@ -2,11 +2,11 @@ package com.scaler.movieinfoservice.models;
 
 public class Movie {
     private String movieName;
-    private Integer movieId;
+    private String movieId;
     private String description;
 
     public Movie(){}
-    public Movie(String movieName, Integer movieId, String description) {
+    public Movie(String movieName, String movieId, String description) {
         this.movieName = movieName;
         this.movieId = movieId;
         this.description = description;
@@ -20,11 +20,11 @@ public class Movie {
         this.movieName = movieName;
     }
 
-    public Integer getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 

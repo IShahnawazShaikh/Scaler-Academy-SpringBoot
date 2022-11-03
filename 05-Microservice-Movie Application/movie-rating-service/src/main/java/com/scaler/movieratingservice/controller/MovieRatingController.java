@@ -12,15 +12,15 @@ import java.util.Arrays;
 @RequestMapping("/rating")
 public class MovieRatingController {
     @RequestMapping("/{movieId}")
-    public Rating getMovieRatingByMovieId(@PathVariable("movieId") Integer movieId){
-        return new Rating(112,10);
+    public Rating getMovieRatingByMovieId(@PathVariable("movieId") String movieId){
+        return new Rating("don",10);
     }
 
     @RequestMapping("users/{userId}")
     public UserRating getUserRatingList(@PathVariable("userId") String userId){
         var ratingList= Arrays.asList(
-                new Rating(112,4),
-                new Rating(113,5)
+                new Rating("1234",4),
+                new Rating("5678",5)
         );
 
         UserRating userRating=new UserRating();
