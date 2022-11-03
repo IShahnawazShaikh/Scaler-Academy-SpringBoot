@@ -1,6 +1,7 @@
 package com.scaler.letmeupdate.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +32,11 @@ public class UsersController {
    }
 
    @GetMapping("/@{username}")
-    ResponseEntity<UsersDTO.GetUserResponse> getUserByUsername(@PathVariable("username") String username,
-                                                               @AuthenticationPrincipal UserEntity authenticatedUser){
+   HttpStatus getUserByUsername(@PathVariable("username") String username,
+                                @AuthenticationPrincipal UserEntity authenticatedUser){
        var user=usersServiceImpl.findByUsername(username);
-
-       return ResponseEntity.ok(user);
+        return ResponseEntity.notFound();
+       //return ResponseEntity.ok(user);
    }
 
    @GetMapping("/all")
