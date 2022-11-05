@@ -1,5 +1,6 @@
 package com.scaler.moviecatalogservice.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.scaler.moviecatalogservice.models.CatalogItem;
 import com.scaler.moviecatalogservice.models.Movie;
 import com.scaler.moviecatalogservice.models.Rating;
@@ -25,6 +26,7 @@ public class MovieCatalogController {
     @Autowired
     private  WebClient.Builder webClientBuilder;
     @RequestMapping("/{userId}")
+    @HystrixCommand(fallbackMethod = "fallbackGetCatalog")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String  userId){
         // 1) Get all rated Movie IDs
         var userRating=restTemplate.getForObject("http://MOVIE-RATING-SERVICE/rating/users/foo", UserRating.class);
@@ -46,5 +48,9 @@ public class MovieCatalogController {
         }).collect(Collectors.toList());
         return response;
 
+    }
+    public List<CatalogItem> fallbackGetCatalog(@PathVariable("userId") String  userId) {
+       var response=Arrays.asList(new CatalogItem("no movie","response from fallback method",-1));
+       return response;
     }
 }
