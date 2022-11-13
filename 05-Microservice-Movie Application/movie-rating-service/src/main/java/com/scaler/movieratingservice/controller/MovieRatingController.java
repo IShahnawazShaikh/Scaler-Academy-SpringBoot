@@ -13,14 +13,14 @@ import java.util.Arrays;
 public class MovieRatingController {
     @RequestMapping("/{movieId}")
     public Rating getMovieRatingByMovieId(@PathVariable("movieId") Integer movieId){
-        return new Rating(112,10);
+        return new Rating("112",10);
     }
 
     @RequestMapping("users/{userId}")
     public UserRating getUserRatingList(@PathVariable("userId") String userId){
         var ratingList= Arrays.asList(
-                new Rating(112,4),
-                new Rating(113,5)
+                new Rating("112",4),
+                new Rating("113",5)
         );
 
         UserRating userRating=new UserRating();

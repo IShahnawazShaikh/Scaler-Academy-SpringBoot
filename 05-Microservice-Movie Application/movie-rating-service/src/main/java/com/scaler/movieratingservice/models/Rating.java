@@ -1,20 +1,20 @@
 package com.scaler.movieratingservice.models;
 
 public class Rating {
-    private Integer movieId;
+    private String movieId;
     private Integer rating;
 
     public Rating(){}
-    public Rating(Integer movieId, Integer rating) {
+    public Rating(String movieId, Integer rating) {
         this.movieId = movieId;
         this.rating = rating;
     }
 
-    public Integer getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 
