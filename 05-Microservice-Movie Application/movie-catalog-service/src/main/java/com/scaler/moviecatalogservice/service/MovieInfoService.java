@@ -14,12 +14,11 @@ public class MovieInfoService {
     @Autowired
     private RestTemplate restTemplate;
     @HystrixCommand(fallbackMethod = "getFallbackCatalogItems",
-     commandProperties ={
-             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"),
-             @HystrixProperty(name="circuitBreaker.requestVolumeThreshold",value = "6"),
-             @HystrixProperty(name="circuitBreaker.errorThresholdPercentage",value = "50"),
-             @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds",value = "5000")
-     })
+            threadPoolKey = "movieRatingPool",
+            threadPoolProperties = {
+                    @HystrixProperty(name="coreSize",value = "2"),
+                    @HystrixProperty(name="maxQueueSize",value = "3")
+            })
     public CatalogItem getCatalogItems(Rating rating) {
         var movie=restTemplate.getForObject("http://MOVIE-INFO-SERVICE/movie/"+ rating.getMovieId(), Movie.class);
         return new CatalogItem(movie.getMovieName(), movie.getDescription(), rating.getRating());
